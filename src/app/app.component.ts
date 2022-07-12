@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Todo } from 'src/models/todo.model';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,9 @@ import { Todo } from 'src/models/todo.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public mode: String = 'list';
   public todos: Todo[] = [];
-  public title: string = 'Minhas Tarefas';
+  public title: string = 'Lista de Tarefas';
   public form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -58,6 +60,7 @@ export class AppComponent {
   save(){
     const data = JSON.stringify(this.todos);
     localStorage.setItem('todos', data);
+    this.mode='list';
   }
 
   load() {
@@ -67,6 +70,10 @@ export class AppComponent {
     } else {
       this.todos = [];
     }
+  }
+
+  changeMode(mode: String){
+    this.mode = mode;
   }
 
 }
